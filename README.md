@@ -1,2 +1,2 @@
 # threaded-comments
-Threaded comments demo Laravel application.
+Threaded Comments Demo Laravel Application.
