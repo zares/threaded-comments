@@ -1,0 +1,29 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+    @apply font-medium;
+}
+
+td nav > span {
+    @apply relative inline-flex items-center px-4 py-2 text-sm font-medium text-gray-500 bg-white border border-gray-300 cursor-default leading-5 rounded-md;
+}
+
+td nav a {
+    @apply relative inline-flex items-center px-4 py-2 text-sm font-medium text-gray-800 bg-white border border-gray-300 leading-5 rounded-md hover:text-gray-500 focus:outline-none focus:ring ring-gray-300 focus:border-blue-300 active:bg-gray-100 active:text-gray-700 transition ease-in-out duration-150;
+}
+
+.level-1 {
+    @apply pt-2 px-0 mt-3 text-base rounded-lg;
+}
+
+.level-2,
+.level-3,
+.level-4 {
+    @apply pt-2 pl-0 mt-3 ml-5 md:ml-10 text-base rounded-lg border-t border-gray-200;
+}
+
+.level-5 {
+    @apply pt-2 mt-3 text-base rounded-lg border-t border-gray-200;
+}
