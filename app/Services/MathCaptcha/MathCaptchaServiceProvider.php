@@ -2,10 +2,9 @@
 
 namespace App\Services\MathCaptcha;
 
-use Illuminate\Contracts\Support\DeferrableProvider;
 use Illuminate\Support\ServiceProvider;
 
-class MathCaptchaServiceProvider extends ServiceProvider implements DeferrableProvider
+class MathCaptchaServiceProvider extends ServiceProvider
 {
     /**
      * Register the cptcha service.
