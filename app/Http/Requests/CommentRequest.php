@@ -23,13 +23,13 @@ class CommentRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'id'         => 'nullable|exists:comments,id',
-            'parent_id'  => 'nullable|exists:comments,id',
+            'id'         => 'nullable|integer|exists:comments,id',
+            'parent_id'  => 'nullable|integer|exists:comments,id',
             'user_name'  => 'required|min:3|max:255|regex:/^[a-zA-Z0-9_]+$/',
             'email'      => 'required|email|max:255',
             'home_page'  => 'nullable|url|max:255',
             'captcha'    => 'required|regex:/^[a-zA-Z0-9]+$/',
-            'text'       => 'required|max:1024|min:3',
+            'text'       => 'required|max:1024',
             'image'      => 'nullable',
             'file'       => 'nullable',
             'token'      => 'nullable|ulid',
@@ -43,10 +43,12 @@ class CommentRequest extends FormRequest
     public function messages(): array
     {
         return [
-            'id.exists'        => 'The comment you are trying to edit was not found!',
-            'parent_id.exists' => 'The comment you are replying to was not found!',
-            'token.ulid'       => 'You do not have access to edit this message!',
-            'captcha.regex'    => 'Wrong answer in captcha field!',
+            'id.integer'        => 'The message you are trying to edit was not found!',
+            'id.exists'         => 'The message you are trying to edit was not found!',
+            'parent_id.integer' => 'The message you are replying to was not found!',
+            'parent_id.exists'  => 'The message you are replying to was not found!',
+            'token.ulid'        => 'You do not have access to edit this message!',
+            'captcha.regex'     => 'Wrong answer in captcha field!',
         ];
     }
 
@@ -58,7 +60,7 @@ class CommentRequest extends FormRequest
     {
         return [
             function (\Illuminate\Validation\Validator $validator) {
-                if (! app('captcha')->verify($this->input('captcha'))) {
+                if (! app('captcha')->verify($this->captcha)) {
                     $validator->errors()->add(
                         'captcha',
                         'Wrong answer in captcha field!'
@@ -66,9 +68,8 @@ class CommentRequest extends FormRequest
                 }
             },
             function (\Illuminate\Validation\Validator $validator) {
-                $id = $this->input('id');
-                $token = $this->input('token');
-                if (($id && $token) && ! Utils::verifyToken($id, $token)) {
+                if (($this->id && $token = $this->token)
+                    && ! Utils::verifyToken($this->id, $this->token)) {
                     $validator->errors()->add(
                         'token',
                         'You do not have access to edit this message!'
@@ -76,6 +77,17 @@ class CommentRequest extends FormRequest
                 }
             }
         ];
+    }
+
+    /**
+     * Prepare input values for validation.
+     * @return void
+     */
+    protected function prepareForValidation()
+    {
+        $this->merge([
+            'text' => app('purifier')->clean($this->text),
+        ]);
     }
 
     /**
