@@ -17,7 +17,6 @@ class Avatar
         $basename = md5($email);
         $filename = $basename .'.svg';
         $subpath  = 'public/avatars/'. $filename;
-        $filepath = storage_path($subpath);
 
         if (Storage::disk('local')->missing($subpath)) {
             $multiavatar = new Multiavatar();

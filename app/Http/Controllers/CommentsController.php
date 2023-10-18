@@ -73,7 +73,7 @@ class CommentsController extends Controller
             ->formData($id, $token);
 
         return response()->json([
-            'html' => view('form.simple',
+            'html' => view('form.full',
                 $formData
             )->render()
         ]);

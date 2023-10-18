@@ -2,8 +2,9 @@
 
 namespace App\Repositories;
 
-use App\Support\Utils;
+use App\Services\FileUploader\Attachment;
 use App\Models\Comment;
+use App\Support\Utils;
 
 class CommentRepository
 {
@@ -88,6 +89,15 @@ class CommentRepository
             $comment->parent_id = $parentId;
         }
 
+        // Put original file names
+        if ($action == 'update' && $comment->extra) {
+            $extra = json_decode($comment->extra, true);
+            $comment->extra = [
+                'old_image' => $extra['image']['original_name'] ?? null,
+                'old_file'  => $extra['file']['original_name'] ?? null,
+            ];
+        }
+
         return [
             'action'   => $action,
             'token'    => $token ?? null,
@@ -115,8 +125,17 @@ class CommentRepository
 
         $level = $parentLevel < 5 ? ++$parentLevel : 5;
 
-        // TODO: put attachments data to json.
-        $extra = null;
+        $uploads = [];
+
+        if (isset($data['image'])) {
+            $uploads['image'] = Attachment::save($data['image']);
+        }
+
+        if (isset($data['file'])) {
+            $uploads['file'] = Attachment::save($data['file']);
+        }
+
+        $extra = $uploads ? json_encode($uploads) : null;
 
         $comment = Comment::create([
             'parent_id' => $pid,
@@ -141,16 +160,30 @@ class CommentRepository
      */
     public function update(array $data)
     {
-        // TODO: put attachments data to json.
-        $extra = null;
-
         $comment = Comment::find($data['id']);
 
         $comment->user_name = $data['user_name'];
         $comment->email     = $data['email'];
         $comment->home_page = $data['home_page'];
         $comment->text      = $data['text'];
-        $comment->extra     = $extra;
+
+        // Attacments...
+        if ($comment->extra) {
+            $extra = json_decode($comment->extra, true);
+        }
+        // If changed image
+        if (isset($data['image'])) {
+            $extra['image'] = Attachment::save($data['image']);
+        }
+        // If changed text file
+        if (isset($data['file'])) {
+            $extra['file'] = Attachment::save($data['file']);
+        }
+
+        if (isset($extra)) {
+            $comment->extra = json_encode($extra);
+        }
+
         $comment->save();
 
         $comment->token = $data['token'];

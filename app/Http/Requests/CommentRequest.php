@@ -30,8 +30,8 @@ class CommentRequest extends FormRequest
             'home_page'  => 'nullable|url|max:255',
             'captcha'    => 'required|regex:/^[a-zA-Z0-9]+$/',
             'text'       => 'required|max:1024',
-            'image'      => 'nullable',
-            'file'       => 'nullable',
+            'image'      => 'nullable|image|mimes:jpeg,jpg,gif,png',
+            'file'       => 'nullable|file|mimes:txt|max:100',
             'token'      => 'nullable|ulid',
         ];
     }

@@ -109,6 +109,30 @@ const formInit = () => {
         });
     }
 
+    const attachImage = document.querySelector('.js-attach-image');
+    if (attachImage) {
+        attachImage.addEventListener('click', () => {
+            const input = attachImage.querySelector('[name="image"]');
+            input.addEventListener('change', (e) => {
+                const label = attachImage.querySelector('span');
+                label.innerHTML = e.target.files[0].name;
+            })
+            input.click();
+        });
+    }
+
+    const attachfile = document.querySelector('.js-attach-file');
+    if (attachfile) {
+        attachfile.addEventListener('click', () => {
+            const input = attachfile.querySelector('[name="file"]');
+            input.addEventListener('change', (e) => {
+                const label = attachfile.querySelector('span');
+                label.innerHTML = e.target.files[0].name;
+            })
+            input.click();
+        });
+    }
+
     const backButton = document.querySelector('.js-back-button');
     if (backButton) {
         backButton.addEventListener('click', () => {
