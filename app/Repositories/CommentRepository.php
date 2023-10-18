@@ -177,12 +177,20 @@ class CommentRepository
         // If changed image
         if (isset($data['image']) &&
             $image = Attachment::save($data['image'])) {
+            if ($extra['image'] ?? null) {
+                // Always one attached image
+                Attachment::remove($extra['image']);
+            }
             $extra['image'] = $image;
         }
 
         // If changed text file
         if (isset($data['file']) &&
             $file = Attachment::save($data['file'])) {
+            if ($extra['file'] ?? null) {
+                // Always one attached text file
+                Attachment::remove($extra['file']);
+            }
             $extra['file'] = $file;
         }
 

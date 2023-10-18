@@ -76,6 +76,22 @@ class Attachment
     }
 
     /**
+     * Remove saved file.
+     * @param  array  $data
+     * @return void
+     */
+    public static function remove(array $data)
+    {
+        $fileName = $data['file_name'];
+
+        if (Storage::exists("public/images/{$fileName}")) {
+            Storage::delete("public/images/{$fileName}");
+        } elseif (Storage::exists("public/files/{$fileName}")) {
+            Storage::delete("public/files/{$fileName}");
+        }
+    }
+
+    /**
      * Resize uploaded image.
      * @param  string $realPath
      * @param  string $fileName
