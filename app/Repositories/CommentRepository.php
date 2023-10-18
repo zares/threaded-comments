@@ -127,12 +127,14 @@ class CommentRepository
 
         $uploads = [];
 
-        if (isset($data['image'])) {
-            $uploads['image'] = Attachment::save($data['image']);
+        if (isset($data['image']) &&
+            $image = Attachment::save($data['image'])) {
+                $uploads['image'] = $image;
         }
 
-        if (isset($data['file'])) {
-            $uploads['file'] = Attachment::save($data['file']);
+        if (isset($data['file']) &&
+            $file = Attachment::save($data['file'])) {
+                $uploads['file'] = $file;
         }
 
         $extra = $uploads ? json_encode($uploads) : null;
@@ -171,13 +173,17 @@ class CommentRepository
         if ($comment->extra) {
             $extra = json_decode($comment->extra, true);
         }
+
         // If changed image
-        if (isset($data['image'])) {
-            $extra['image'] = Attachment::save($data['image']);
+        if (isset($data['image']) &&
+            $image = Attachment::save($data['image'])) {
+            $extra['image'] = $image;
         }
+
         // If changed text file
-        if (isset($data['file'])) {
-            $extra['file'] = Attachment::save($data['file']);
+        if (isset($data['file']) &&
+            $file = Attachment::save($data['file'])) {
+            $extra['file'] = $file;
         }
 
         if (isset($extra)) {

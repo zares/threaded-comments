@@ -28,7 +28,7 @@ class Attachment
     /**
      * Save uploaded file
      * @param  UploadedFile $file
-     * @return array
+     * @return array|null
      */
     public static function save(UploadedFile $file)
     {
@@ -43,18 +43,30 @@ class Attachment
         $fileName = md5(uniqid('', true)) .'.'. $extension;
 
         // If file is image
-        if (in_array($mimeType, static::$imageMimeTypes))
-        {
+        if (in_array($mimeType, static::$imageMimeTypes)) {
             $realPath = $file->getRealPath();
+
             // Check image dimensions and resise if need
-            $saved = static::resizeImage($realPath, $fileName);
-            // If not saved by ZabraImage
-            if ($saved === false) {
+            $resized = static::resizeImage($realPath, $fileName);
+
+            // If the resize with saving return error
+            if ($resized === null) {
+                return;
+            }
+
+            // If not need to resize
+            if ($resized === false) {
+                // Save original
                 $file->storePubliclyAs('images', $fileName, 'public');
             }
+
         // File is a text file
         } elseif ($mimeType == 'text/plain') {
             $file->storePubliclyAs('files', $fileName, 'public');
+
+        // Invalid file type
+        } else {
+            return;
         }
 
         return [
@@ -124,6 +136,7 @@ class Attachment
                         logger('"exif_read_data" function is not available');
                         break;
                 }
+                return null;
             }
             return true;
         }
