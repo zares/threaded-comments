@@ -17,4 +17,5 @@
             </div>
         </div>
     </section>
+    @include('modals.default')
 @stop

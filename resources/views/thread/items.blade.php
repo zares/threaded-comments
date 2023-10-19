@@ -2,7 +2,7 @@
     @if ($comment->parent_id != $parent)
         @continue
     @endif
-    <article class="js-thread-item level-{{ $comment->level }}" id="item-{{ $comment->id }}">
+    <article class="js-thread-item level-{{ $comment->level }}" id="item-{{ $comment->id }}" data-hasextra="{{ $comment->extra ? 'yes' : 'no' }}">
         <div class="js-wrapper pt-4 pl-0 md:pl-3 pr-1 rounded-lg">
             <footer class="flex justify-between items-center mb-2">
                 <div class="flex items-center">
@@ -24,21 +24,33 @@
                 </p>
             @endif
             <p class="mt-1 text-gray-500">{!! nl2br($comment->text) !!}</p>
-            <div class="flex items-center mt-3 space-x-4">
+            <div class="flex justify-between mt-4 space-x-4">
                 @if ($comment->token ?? null)
                     <button type="button" class="js-edit-button flex items-center mb-4 text-sm text-gray-500 font-medium" data-id="{{ $comment->id }}" data-token="{{ $comment->token }}">
-                        <svg class="mr-1.5 w-3.5 h-3.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 18">
-                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 14 3-3m-3 3 3 3m-3-3h16v-3m2-7-3 3m3-3-3-3m3 3H3v3"></path>
-                        </svg>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-1.5"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
                         Edit Comment
                     </button>
                 @else
                     <button type="button" class="js-reply-button flex items-center mb-4 text-sm text-gray-500 font-medium" data-id="{{ $comment->id }}">
-                        <svg class="mr-1.5 w-3.5 h-3.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 18">
-                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 5h5M5 8h2m6-3h2m-5 3h6m2-7H2a1 1 0 0 0-1 1v9a1 1 0 0 0 1 1h3v5l5-5h8a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1Z"/>
-                        </svg>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-1 mt-1"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
                         Reply
                     </button>
+                @endif
+                @if ($comment->extra)
+                    @php($extra = json_decode($comment->extra, true))
+                    <div class="flex mb-4 text-xs text-gray-500 font-medium">
+                        <span class="mr-2 py-0.5"><em>Attachments:</em></span>
+                        @if ($image = ($extra['image']['file_name'] ?? null))
+                            <div class="js-extra-image flex items-center cursor-pointer" data-url="{{ url('/storage/images/'. $image) }}">
+                                <span class="bg-gray-100 text-gray-800 mr-2 pl-1.5 pr-2.5 py-0.5 rounded-full">&bull;&nbsp;Image</span>
+                            </div>
+                        @endif
+                        @if ($file = ($extra['file']['file_name'] ?? null))
+                            <div class="js-extra-file flex items-center cursor-pointer" data-url="{{ url('/storage/files/'. $file) }}">
+                                <span class="bg-gray-100 text-gray-800 mr-2 pl-1.5 pr-2.5 py-0.5 rounded-full">&bull;&nbsp;Text file</span>
+                            </div>
+                        @endif
+                    </div>
                 @endif
             </div>
         </div>
