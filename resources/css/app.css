@@ -27,3 +27,7 @@ td nav a {
 .level-5 {
     @apply pt-2 mt-3 text-base rounded-lg border-t border-gray-200;
 }
+
+.js-wrapper a {
+    @apply text-blue-600 underline hover:no-underline;
+}

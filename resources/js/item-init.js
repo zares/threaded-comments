@@ -41,11 +41,11 @@ const itemInit = (element) => {
 
         // Modal initialization
         const getModal = (title, content) => {
-            const modalElement = document.getElementById('modalElement');
-            const modalTitle = modalElement.querySelector('.js-modal-title');
-            const modalBody = modalElement.querySelector('.js-modal-body');
+            const modalWindow = document.getElementById('modal-window');
+            const modalTitle = modalWindow.querySelector('.js-modal-title');
+            const modalBody = modalWindow.querySelector('.js-modal-body');
 
-            const modal = new Modal(modalElement, {
+            const modal = new Modal(modalWindow, {
                 onHide: () => {
                     modalTitle.innerHTML = '';
                     modalBody.innerHTML = '';
@@ -58,7 +58,7 @@ const itemInit = (element) => {
                 }
             });
 
-            const closeButton = modalElement.querySelector('.js-close-button');
+            const closeButton = modalWindow.querySelector('.js-close-button');
             if (closeButton) {
                 closeButton.addEventListener('click', () => {
                     modal.hide();
@@ -69,13 +69,13 @@ const itemInit = (element) => {
         };
 
         // Attachments initialization
-        const hasExtra = element.dataset.hasextra;
-        if (hasExtra == 'yes') {
+        const hasExtra = element.dataset.extra;
+        if (hasExtra == 'y') {
             // Image file
             const extraImage = element.querySelector('.js-extra-image');
             if (extraImage) {
                 const url = extraImage.dataset.url;
-                const title = 'Attached file image';
+                const title = 'Attached image';
                 const content = '<img src="' + url + '">';
                 extraImage.addEventListener('click', () => {
                     const modal = getModal(title, content);
@@ -86,12 +86,12 @@ const itemInit = (element) => {
             const extraFile = element.querySelector('.js-extra-file');
             if (extraFile) {
                 extraFile.addEventListener('click', () => {
-                    // Fetch attachment file
+                    // Fetch the attached file
                     axios.get(extraFile.dataset.url)
                         .then((response) => {
                             let data = response.data;
                             data = data.replace(/(?:\r\n|\r|\n)/g, "<br>");
-                            const title = 'Text of the attached file';
+                            const title = 'Attached text file';
                             const modal = getModal(title, data);
                             modal.show();
                         })

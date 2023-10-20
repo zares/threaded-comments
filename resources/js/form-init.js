@@ -1,4 +1,5 @@
 import sectionManager from './section-manager';
+import texteditorInit from './text-editor';
 import formLoader from './form-loader';
 import itemInit from './item-init';
 import config from './config';
@@ -10,6 +11,8 @@ const formInit = () => {
     const commentForm = document.querySelector('.js-comment-form');
 
     if (commentForm) {
+        texteditorInit(commentForm);
+
         commentForm.addEventListener('submit', (e) => {
             e.preventDefault();
 
