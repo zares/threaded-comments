@@ -32,7 +32,7 @@
             </div>
         </div>
     </div>
-    <div class="w-full mb-4">
+    <div class="js-textarea-editor w-full mb-4">
         <label for="messageText" class="block mb-2 text-sm font-semibold text-gray-900">Your message</label>
         <div class="flex justify-between px-3 py-2 border border-b-0 border-gray-300 rounded-tl-lg rounded-tr-lg bg-gray-50">
             <div class="flex items-center space-x-1 sm:pr-4">

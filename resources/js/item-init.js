@@ -1,3 +1,4 @@
+import modalWindow from './modal-window'
 import formLoader from './form-loader';
 import { Modal } from 'flowbite';
 
@@ -39,35 +40,6 @@ const itemInit = (element) => {
 
         }
 
-        // Modal initialization
-        const getModal = (title, content) => {
-            const modalWindow = document.getElementById('modal-window');
-            const modalTitle = modalWindow.querySelector('.js-modal-title');
-            const modalBody = modalWindow.querySelector('.js-modal-body');
-
-            const modal = new Modal(modalWindow, {
-                onHide: () => {
-                    modalTitle.innerHTML = '';
-                    modalBody.innerHTML = '';
-                },
-                onShow: () => {
-                    if (title !== undefined && content !== undefined) {
-                        modalTitle.innerHTML = title;
-                        modalBody.innerHTML = content;
-                    }
-                }
-            });
-
-            const closeButton = modalWindow.querySelector('.js-close-button');
-            if (closeButton) {
-                closeButton.addEventListener('click', () => {
-                    modal.hide();
-                })
-            }
-
-            return modal;
-        };
-
         // Attachments initialization
         const hasExtra = element.dataset.extra;
         if (hasExtra == 'y') {
@@ -78,7 +50,7 @@ const itemInit = (element) => {
                 const title = 'Attached image';
                 const content = '<img src="' + url + '">';
                 extraImage.addEventListener('click', () => {
-                    const modal = getModal(title, content);
+                    const modal = modalWindow(title, content);
                     modal.show();
                 });
             }
@@ -92,7 +64,7 @@ const itemInit = (element) => {
                             let data = response.data;
                             data = data.replace(/(?:\r\n|\r|\n)/g, "<br>");
                             const title = 'Attached text file';
-                            const modal = getModal(title, data);
+                            const modal = modalWindow(title, data);
                             modal.show();
                         })
                         .catch((failure) => {

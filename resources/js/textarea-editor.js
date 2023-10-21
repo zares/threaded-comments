@@ -1,5 +1,5 @@
-/* Text editor initialization */
-const texteditorInit = (form) => {
+/* Textarea editor initialization */
+const textareaEditor = (editor) => {
     // Action buttons
     const actions = {
         bold:   '<strong>content</strong>',
@@ -8,9 +8,8 @@ const texteditorInit = (form) => {
         link:   '<a href="">content</a>'
     };
 
-    const textarea = form.querySelector('.js-textarea');
-    const buttons = form.querySelectorAll('.js-action-button');
-
+    const textarea = editor.querySelector('.js-textarea');
+    const buttons = editor.querySelectorAll('.js-action-button');
     if (buttons.length) {
         buttons.forEach((button) => {
             button.addEventListener('click', () => {
@@ -46,4 +45,4 @@ const texteditorInit = (form) => {
     }
 };
 
-export default texteditorInit;
+export default textareaEditor;
