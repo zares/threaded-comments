@@ -23,4 +23,5 @@ Route::prefix('comment')->group(function () {
     Route::get('form/{id?}/{token?}', [CommentsController::class, 'form'])->name('comment.form');
     Route::post('create', [CommentsController::class, 'create'])->name('comment.create');
     Route::post('update', [CommentsController::class, 'update'])->name('comment.update');
+    Route::post('remove', [CommentsController::class, 'remove'])->name('comment.remove');
 });

@@ -205,4 +205,20 @@ class CommentRepository
         return $comment;
     }
 
+    /**
+     * Remove entry.
+     * @param  array $data
+     * @return boolean
+     */
+    public function remove(array $data)
+    {
+        $comment = Comment::find($data['id']);
+
+        if ($comment->replies->count() > 0) {
+            return false;
+        }
+
+        return (bool) $comment->delete();
+    }
+
 }

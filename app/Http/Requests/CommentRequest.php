@@ -60,20 +60,18 @@ class CommentRequest extends FormRequest
     {
         return [
             function (\Illuminate\Validation\Validator $validator) {
-                if (! app('captcha')->verify($this->captcha)) {
+                $captcha = $validator->validated()['captcha'] ?? null;
+                if ($captcha && ! app('captcha')->verify($captcha)) {
                     $validator->errors()->add(
-                        'captcha',
-                        'Wrong answer in captcha field!'
+                        'captcha', 'Wrong answer in captcha field!'
                     );
                 }
             },
             function (\Illuminate\Validation\Validator $validator) {
-                if (($this->id && $token = $this->token)
-                    && ! Utils::verifyToken($this->id, $this->token)) {
-                    $validator->errors()->add(
-                        'token',
-                        'You do not have access to edit this message!'
-                    );
+                $id = $validator->validated()['id'] ?? null;
+                $token = $validator->validated()['token'] ?? null;
+                if (($id && $token) && ! Utils::verifyToken($id, $token)) {
+                    $validator->errors()->add('token', 'Access denied!');
                 }
             }
         ];

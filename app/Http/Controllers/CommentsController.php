@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Repositories\CommentRepository;
+use App\Http\Requests\RemoveCommentRequest;
 use App\Http\Requests\CommentRequest;
 
 class CommentsController extends Controller
@@ -117,6 +118,25 @@ class CommentsController extends Controller
                 'comments' => [$entry]
             ])->render()
         ]);
+    }
+
+    /**
+     * Remove comment.
+     * @param  RemoveCommentRequest $request
+     * @return Illuminate\Http\JsonResponse
+     */
+    public function remove(RemoveCommentRequest $request)
+    {
+        $result = $this->repository
+            ->remove($request->validated());
+
+        if (! $result) {
+            return response()->json([
+                'You cannot delete a message that has replies.'
+            ], 409);
+        }
+
+        return response()->json([]);
     }
 
 }

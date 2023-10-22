@@ -1,4 +1,4 @@
-<div class="fixed top-0 left-0 right-0 z-50 hidden w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] max-h-full" id="modal-window" tabindex="-1" aria-hidden="true">
+<div class="fixed top-0 left-0 right-0 z-50 hidden w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] max-h-full" id="default-modal" tabindex="-1" aria-hidden="true">
     <div class="relative max-w-2xl max-h-full">
         <div class="relative bg-white rounded-lg shadow">
             <div class="flex items-start justify-between py-4 px-6 sm:px-4 border-b rounded-t">

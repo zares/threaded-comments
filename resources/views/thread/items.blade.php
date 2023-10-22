@@ -23,13 +23,19 @@
                     </span>
                 </p>
             @endif
-            <p class="mt-1 text-gray-500">{!! nl2br($comment->text) !!}</p>
+            <p class="js-comment-text mt-1 text-gray-500">{!! nl2br($comment->text) !!}</p>
             <div class="flex justify-between mt-4 space-x-4">
                 @if ($comment->token ?? null)
-                    <button type="button" class="js-edit-button flex items-center mb-4 text-sm text-gray-500 font-medium" data-id="{{ $comment->id }}" data-token="{{ $comment->token }}">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-1.5"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
-                        Edit Comment
-                    </button>
+                    <div class="flex">
+                        <button type="button" class="js-edit-button flex items-center mb-4 mr-5 text-sm text-gray-500 font-medium" data-id="{{ $comment->id }}" data-token="{{ $comment->token }}">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-1.5"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
+                            Edit&nbsp;<span class="hidden sm:block">&nbsp;message</span>
+                        </button>
+                        <button type="button" class="js-remove-button flex items-center mb-4 text-sm text-gray-500 font-medium" data-id="{{ $comment->id }}" data-token="{{ $comment->token }}" data-url={{ route('comment.remove') }}>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-1.5"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="9" y1="9" x2="15" y2="15"></line><line x1="15" y1="9" x2="9" y2="15"></line></svg>
+                            Remove
+                        </button>
+                    </div>
                 @else
                     <button type="button" class="js-reply-button flex items-center mb-4 text-sm text-gray-500 font-medium" data-id="{{ $comment->id }}">
                         <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-1 mt-1"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
@@ -39,7 +45,7 @@
                 @if ($comment->extra)
                     @php($extra = json_decode($comment->extra, true))
                     <div class="flex mb-4 text-xs text-gray-500 font-medium">
-                        <span class="mr-2 py-0.5"><em>Attachments:</em></span>
+                        <span class="mr-2 py-0.5 hidden sm:block"><em>Attachments:</em></span>
                         @if ($image = ($extra['image']['file_name'] ?? null))
                             <div class="js-extra-image flex items-center cursor-pointer" data-url="{{ url('/storage/images/'. $image) }}">
                                 <span class="bg-gray-100 text-gray-800 mr-2 pl-1.5 pr-2.5 py-0.5 rounded-full">&bull;&nbsp;Image</span>

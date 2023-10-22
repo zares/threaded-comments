@@ -1,11 +1,11 @@
-import modalWindow from './modal-window'
+import defaultModal from './default-modal'
+import popupModal from './popup-modal'
 import formLoader from './form-loader';
-import { Modal } from 'flowbite';
 
 /* Thread item init */
 const itemInit = (element) => {
     if (element !== undefined) {
-        let replyBtn, editBtn;
+        let replyBtn, editBtn, removeBtn;
 
         // Reply button initialization
         if (replyBtn = element.querySelector('.js-reply-button')) {
@@ -13,13 +13,27 @@ const itemInit = (element) => {
                 // We pass the item id to the form as parent_id
                 formLoader(replyBtn.dataset.id);
             });
-            // Edit button initialization
-        } else if (editBtn = element.querySelector('.js-edit-button')) {
+        }
+
+        // Edit button initialization
+        if (editBtn = element.querySelector('.js-edit-button')) {
             editBtn.addEventListener('click', () => {
                 // We also pass the token for access to edit
                 formLoader(editBtn.dataset.id, editBtn.dataset.token);
                 // Remove the element for prevend dublication
                 element.remove();
+            });
+        }
+
+        // Remove button initialization
+        if (removeBtn = element.querySelector('.js-remove-button')) {
+            removeBtn.addEventListener('click', () => {
+                const modal = popupModal(
+                    removeBtn.dataset.id,
+                    removeBtn.dataset.token,
+                    removeBtn.dataset.url
+                );
+                modal.show();
             });
         }
 
@@ -37,7 +51,6 @@ const itemInit = (element) => {
                 }, 3000);
 
             });
-
         }
 
         // Attachments initialization
@@ -50,7 +63,7 @@ const itemInit = (element) => {
                 const title = 'Attached image';
                 const content = '<img src="' + url + '">';
                 extraImage.addEventListener('click', () => {
-                    const modal = modalWindow(title, content);
+                    const modal = defaultModal(title, content);
                     modal.show();
                 });
             }
@@ -64,7 +77,7 @@ const itemInit = (element) => {
                             let data = response.data;
                             data = data.replace(/(?:\r\n|\r|\n)/g, "<br>");
                             const title = 'Attached text file';
-                            const modal = modalWindow(title, data);
+                            const modal = defaultModal(title, data);
                             modal.show();
                         })
                         .catch((failure) => {

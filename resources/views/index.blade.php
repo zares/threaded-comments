@@ -18,4 +18,5 @@
         </div>
     </section>
     @include('modals.default')
+    @include('modals.popup')
 @stop
