@@ -31,7 +31,7 @@ class CommentsController extends Controller
         $cursor = $order == 'id' ? true : false;
 
         $entries = $this->repository
-            ->getList($order, $sort, $cursor, 5);
+            ->getList($order, $sort, $cursor);
 
         return response()->json([
             'html' => view("list.{$view}", [

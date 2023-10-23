@@ -103,7 +103,7 @@ class Attachment
         $size = getimagesize($realPath);
 
         // If the dimension exceed the limit value
-        if (($size[0] ?? 0) > 350 || ($size[1] ?? 0) > 250) {
+        if (($size[0] ?? 0) > 320 || ($size[1] ?? 0) > 240) {
             // Make images directory if not exists
             // ZebraImage will not create a new directory!
             if (! Storage::exists(static::$imageStore)) {

@@ -12,7 +12,7 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        $sqlDump = base_path('database/dumps/comments.sql');
+        $sqlDump = base_path('database/dumps/data.sql');
 
         DB::unprepared(
             file_get_contents($sqlDump)

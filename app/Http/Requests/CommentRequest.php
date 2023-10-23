@@ -28,7 +28,7 @@ class CommentRequest extends FormRequest
             'user_name'  => 'required|min:3|max:255|regex:/^[a-zA-Z0-9_]+$/',
             'email'      => 'required|email|max:255',
             'home_page'  => 'nullable|url|max:255',
-            'captcha'    => 'required|regex:/^[a-zA-Z0-9]+$/',
+            'captcha'    => 'required|regex:/^[0-9]+$/',
             'text'       => 'required|max:1024',
             'image'      => 'nullable|image|mimes:jpeg,jpg,gif,png',
             'file'       => 'nullable|file|mimes:txt|max:100',
