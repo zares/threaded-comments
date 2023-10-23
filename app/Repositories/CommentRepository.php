@@ -218,6 +218,20 @@ class CommentRepository
             return false;
         }
 
+        if ($comment->extra) {
+            $extra = json_decode($comment->extra, true);
+        }
+
+        // Remove attached image file
+        if ($extra['image'] ?? null) {
+            Attachment::remove($extra['image']);
+        }
+
+        // Remove attached text file
+        if ($extra['file'] ?? null) {
+            Attachment::remove($extra['file']);
+        }
+
         return (bool) $comment->delete();
     }
 
