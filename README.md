@@ -13,10 +13,10 @@ cd threaded-comments
 composer install
 ```
 ```bash
-php artisan storage:link
+php artisan migrate --seed
 ```
 ```bash
-php artisan migrate --seed
+php artisan app:install
 ```
 ### Run
 

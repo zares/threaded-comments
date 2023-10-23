@@ -104,11 +104,6 @@ class Attachment
 
         // If the dimension exceed the limit value
         if (($size[0] ?? 0) > 320 || ($size[1] ?? 0) > 240) {
-            // Make images directory if not exists
-            // ZebraImage will not create a new directory!
-            if (! Storage::exists(static::$imageStore)) {
-                Storage::makeDirectory(static::$imageStore);
-            }
 
             $image = new Image;
 
