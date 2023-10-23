@@ -34,14 +34,15 @@ class ApplicationInstall extends Command
      */
     protected function makeDirectories()
     {
+        $path = storage_path('app/public/');
+
         $directories = $this->directories();
 
-        foreach ($directories as $dir) {
-            $path = storage_path('app/public/');
-            $directory = $path . $dir;
-            if (! file_exists($directory)) {
+        foreach ($directories as $directory) {
+
+            if (! file_exists($path . $directory)) {
                 $this->laravel->make('files')
-                    ->makeDirectory($directory);
+                    ->makeDirectory($path . $directory);
             }
         }
     }
