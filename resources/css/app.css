@@ -36,11 +36,11 @@ td nav a {
     @apply hidden;
 }
 
-#comment-form[data-submitting="true"] .js-submit-btn {
+#comment-form[data-submitting] .js-submit-btn {
     @apply cursor-not-allowed;
 }
 
-#comment-form[data-submitting="true"] .js-submit-btn svg {
+#comment-form[data-submitting] .js-submit-btn svg {
     @apply inline-block;
 }
 

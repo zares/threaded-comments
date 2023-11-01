@@ -18,7 +18,7 @@ const formInit = () => {
         commentForm.addEventListener('submit', (e) => {
             e.preventDefault();
 
-            commentForm.dataset.submitting = true;
+            commentForm.toggleAttribute('data-submitting', true);
             commentForm.disabled = true;
 
             const formData = new FormData(commentForm);
@@ -29,7 +29,7 @@ const formInit = () => {
                     },
                 })
                 .then((response) => {
-                    commentForm.dataset.submitting = false;
+                    commentForm.toggleAttribute('data-submitting', false);
                     commentForm.disabled = false;
 
                     const html = response.data.html;
@@ -94,7 +94,7 @@ const formInit = () => {
                     element.scrollIntoView({ behavior: 'smooth' });
                 })
                 .catch((failure) => {
-                    commentForm.dataset.submitting = false;
+                    commentForm.toggleAttribute('data-submitting', false);
                     commentForm.disabled = false;
 
                     if (! failure.response) {

@@ -3,7 +3,7 @@
         @include('alert.respond')
     @endif
 </div>
-<form class="js-comment-form mb-6" id="comment-form" action="{{ route('comment.'. ($action)) }}" data-submitting="false">
+<form class="js-comment-form mb-6" id="comment-form" action="{{ route('comment.'. ($action)) }}">
     <input type="hidden" name="parent_id" value="{{ $comment->parent_id ?? '' }}">
     @if ($action == 'update')
         <input type="hidden" name="id" value="{{ $comment->id }}">
