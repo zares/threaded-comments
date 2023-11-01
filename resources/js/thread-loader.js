@@ -5,6 +5,8 @@ import formLoader from './form-loader';
 const threadLoader = (param) => {
     const threadSection = document.querySelector('.js-thread-section');
     if (threadSection) {
+        threadSection.innerHTML = 'Loading...';
+
         let url = threadSection.dataset.src;
         // If thread (top level cooment id) is defined
         if (param  !== undefined) {
