@@ -13,10 +13,9 @@ class CommentsController extends Controller
      * Constructor.
      * @param CommentRepository $repository
      */
-    public function __construct(private CommentRepository $repository)
-    {
-        $this->repository = $repository;
-    }
+    public function __construct(
+        private CommentRepository $repository
+    ) {}
 
     /**
      * Top level comment list.
@@ -28,7 +27,7 @@ class CommentsController extends Controller
         $view   = $request->query('index') ? 'index' : 'items';
         $order  = $request->query('orderby') ?: 'id';
         $sort   = $request->query('sort') ?: 'desc';
-        $cursor = $order == 'id' ? true : false;
+        $cursor = $order == 'id';
 
         $entries = $this->repository
             ->getList($order, $sort, $cursor);

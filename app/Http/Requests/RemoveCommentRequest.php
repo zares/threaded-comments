@@ -66,7 +66,7 @@ class RemoveCommentRequest extends FormRequest
     private function fistErrors(MessageBag $messageBag)
     {
         $errors = [];
-        foreach ($messageBag->keys() as $key){
+        foreach ($messageBag->keys() as $key) {
             $errors[$key] = $messageBag->first($key);
         }
 

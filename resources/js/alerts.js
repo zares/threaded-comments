@@ -9,8 +9,10 @@ const errorMessage = (messages) => {
             && messages !== null
             && !Array.isArray(messages))
         ) {
-        for (const [_, msg] of Object.entries(messages)) {
-            list += '<li>' + msg + '</li>';
+        for (const [key, msg] of Object.entries(messages)) {
+            if (key !== 'errors') {
+                list += '<li>' + msg + '</li>';
+            }
         }
     // If messages is array
     } else if (Array.isArray(messages)) {
