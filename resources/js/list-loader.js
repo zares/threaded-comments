@@ -4,6 +4,8 @@ import listIndexInit from './list-index';
 const listLoader = (param) => {
     const listSection = document.querySelector('.js-list-section');
     if (listSection) {
+        listSection.innerHTML = 'Loading...';
+
         axios.get(listSection.dataset.src)
             .then((response) => {
                 const listHtml = response.data.html;
