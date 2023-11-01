@@ -18,6 +18,9 @@ const formInit = () => {
         commentForm.addEventListener('submit', (e) => {
             e.preventDefault();
 
+            commentForm.dataset.submitting = true;
+            commentForm.disabled = true;
+
             const formData = new FormData(commentForm);
             // Send post request
             axios.post(commentForm.action, formData, {
@@ -26,6 +29,9 @@ const formInit = () => {
                     },
                 })
                 .then((response) => {
+                    commentForm.dataset.submitting = false;
+                    commentForm.disabled = false;
+
                     const html = response.data.html;
                     const parentId = formData.get('parent_id');
 
@@ -88,6 +94,9 @@ const formInit = () => {
                     element.scrollIntoView({ behavior: 'smooth' });
                 })
                 .catch((failure) => {
+                    commentForm.dataset.submitting = false;
+                    commentForm.disabled = false;
+
                     if (! failure.response) {
                         return console.log(failure);
                     }
