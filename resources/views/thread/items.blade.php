@@ -14,6 +14,31 @@
                         <time>{!! str_replace(' ', '&nbsp;at&nbsp;', $comment->created_at->format("d.m.Y H:i")) !!}</time>
                     </p>
                 </div>
+
+                <button id="dropdownComment1Button" data-dropdown-toggle="dropdownComment1"
+                    class="inline-flex items-center p-2 text-sm font-medium text-center text-gray-500 rounded-lg hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-gray-50"
+                    type="button">
+                    <svg class="w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 16 3">
+                        <path d="M2 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Zm6.041 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM14 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Z"/>
+                    </svg>
+                </button>
+                <!-- Dropdown menu -->
+                <div id="dropdownComment1"
+                    class="hidden z-10 w-36 bg-white rounded divide-y divide-gray-100 shadow">
+                    <ul class="py-1 text-sm text-gray-700"
+                        aria-labelledby="dropdownMenuIconHorizontalButton">
+                        <li>
+                            <a href="#" class="block py-2 px-4 hover:bg-gray-100">Edit</a>
+                        </li>
+                        <li>
+                            <a href="#" class="block py-2 px-4 hover:bg-gray-100">Remove</a>
+                        </li>
+                        <li>
+                            <a href="#" class="block py-2 px-4 hover:bg-gray-100">Report</a>
+                        </li>
+                    </ul>
+                </div>
+
             </footer>
             @if ($comment->parent_id)
                 <p class="js-quote flex ml-4 text-sm text-gray-400 cursor-pointer" data-ref="{{ $comment->parent_id }}">
