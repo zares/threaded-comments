@@ -52,7 +52,8 @@ class CommentsController extends Controller
 
         return response()->json([
             'html' => view('thread.index', [
-                'comments' => $entries
+                'comments' => $entries,
+                'form_id' => $id > 0 ? $entries[0]->id : ''
             ])->render()
         ]);
     }

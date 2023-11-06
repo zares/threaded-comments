@@ -1,9 +1,9 @@
-<div class="js-alert-place">
+<div data-form-target="alert">
     @if ($_comment)
         @include('alert.respond')
     @endif
 </div>
-<form class="js-comment-form mb-6" id="comment-form" action="{{ route('comment.'. ($action)) }}">
+<form class="mb-6" id="comment-form" data-action="form#submit" data-form-action-param="{{ route('comment.'. $action) }}">
     <input type="hidden" name="parent_id" value="{{ $comment->parent_id ?? '' }}">
     @if ($action == 'update')
         <input type="hidden" name="id" value="{{ $comment->id }}">
@@ -32,32 +32,36 @@
             </div>
         </div>
     </div>
-    <div class="js-textarea-editor w-full mb-4">
+    <div class="w-full mb-4" data-controller="editor">
         <label for="messageText" class="block mb-2 text-sm font-semibold text-gray-900">Your message</label>
         <div class="flex justify-between px-3 py-2 border border-b-0 border-gray-300 rounded-tl-lg rounded-tr-lg bg-gray-50">
             <div class="flex items-center space-x-1 sm:pr-4">
-                <button type="button" class="js-action-button p-2 text-gray-500 rounded cursor-pointer hover:text-gray-900 hover:bg-gray-100" data-action="bold">
+                <button type="button" class="p-2 text-gray-500 rounded cursor-pointer hover:text-gray-900 hover:bg-gray-100" data-action="editor#formatContent" data-editor-action-param="bold">
                     <svg class="w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 16 16"><path d="M4 2h4.5a3.501 3.501 0 0 1 2.852 5.53A3.499 3.499 0 0 1 9.5 14H4a1 1 0 0 1-1-1V3a1 1 0 0 1 1-1Zm1 7v3h4.5a1.5 1.5 0 0 0 0-3Zm3.5-2a1.5 1.5 0 0 0 0-3H5v3Z"></path>
                     </svg>
                 </button>
-                <button type="button" class="js-action-button p-2 text-gray-500 rounded cursor-pointer hover:text-gray-900 hover:bg-gray-100" data-action="italic">
+                <button type="button" class="p-2 text-gray-500 rounded cursor-pointer hover:text-gray-900 hover:bg-gray-100" data-action="editor#formatContent" data-editor-action-param="italic">
                     <svg class="w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 16 16"><path d="M6 2.75A.75.75 0 0 1 6.75 2h6.5a.75.75 0 0 1 0 1.5h-2.505l-3.858 9H9.25a.75.75 0 0 1 0 1.5h-6.5a.75.75 0 0 1 0-1.5h2.505l3.858-9H6.75A.75.75 0 0 1 6 2.75Z"></path>
                     </svg>
                 </button>
-                <button type="button" class="js-action-button p-2 text-gray-500 rounded cursor-pointer hover:text-gray-900 hover:bg-gray-100" data-action="code">
+                <button type="button" class="p-2 text-gray-500 rounded cursor-pointer hover:text-gray-900 hover:bg-gray-100" data-action="editor#formatContent" data-editor-action-param="code">
                     <svg class="w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 16 16"><path d="m11.28 3.22 4.25 4.25a.75.75 0 0 1 0 1.06l-4.25 4.25a.749.749 0 0 1-1.275-.326.749.749 0 0 1 .215-.734L13.94 8l-3.72-3.72a.749.749 0 0 1 .326-1.275.749.749 0 0 1 .734.215Zm-6.56 0a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042L2.06 8l3.72 3.72a.749.749 0 0 1-.326 1.275.749.749 0 0 1-.734-.215L.47 8.53a.75.75 0 0 1 0-1.06Z"></path>
                     </svg>
                 </button>
-                <button type="button" class="js-action-button p-2 text-gray-500 rounded cursor-pointer hover:text-gray-900 hover:bg-gray-100" data-action="link">
+                <button type="button" class="p-2 text-gray-500 rounded cursor-pointer hover:text-gray-900 hover:bg-gray-100" data-action="editor#formatContent" data-editor-action-param="link">
                     <svg class="w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 16 16"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path>
                     </svg>
                 </button>
             </div>
         </div>
-        <textarea name="text" rows="6" id="messageText" class="js-textarea py-2 px-4 w-full bg-gray-50 border-gray-300 text-gray-900 text-sm focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 rounded-bl-lg rounded-br-lg" placeholder="Message text..." required>{!! $comment->text ?? '' !!}</textarea>
+        <textarea data-editor-target="textarea" name="text" rows="6" id="messageText" class="py-2 px-4 w-full bg-gray-50 border-gray-300 text-gray-900 text-sm focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 rounded-bl-lg rounded-br-lg" placeholder="Message text..." required>{!! $comment->text ?? '' !!}</textarea>
     </div>
     <div class="flex text-left">
-        <button type="submit" class="js-submit-btn inline-flex items-center py-2.5 px-4 text-sm font-semibold text-center text-white bg-primary-700 rounded-lg focus:ring-4 focus:ring-primary-200">
+        <button type="submit" class="js-submit-btn inline-flex items-center py-2.5 px-4 text-sm font-semibold text-center text-white bg-primary-700 rounded-lg focus:ring-4 focus:ring-primary-200" data-form-target="submit">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="animate-spin -ml-1 mr-3 h-5 w-5 text-white">
+                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+            </svg>
             @if ($action == 'create' && $_comment)
                 Reply to Comment
             @elseif ($action == 'create')

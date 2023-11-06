@@ -26,9 +26,9 @@ export default class extends Controller {
 	}
 
 	// Show thread from list
-    showThread(event) {
-        this.fetchContent(event.params['url']);
-    }
+	showThread(event) {
+		this.fetchContent(event.params['url']);
+	}
 
 	// Fill the section with content
 	loadContent(content) {

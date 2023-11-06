@@ -31,3 +31,17 @@ td nav a {
 .js-wrapper a {
     @apply text-blue-600 underline hover:no-underline;
 }
+
+form[data-action="form#submit"] button[data-form-target="submit"] svg {
+     @apply hidden;
+}
+
+ form[data-action="form#submit"][data-submitting] button[data-form-target="submit"] {
+     @apply cursor-not-allowed;
+}
+
+ form[data-action="form#submit"][data-submitting] button[data-form-target="submit"] svg {
+     @apply inline-block;
+}
+
+

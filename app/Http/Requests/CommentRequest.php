@@ -88,32 +88,4 @@ class CommentRequest extends FormRequest
         ]);
     }
 
-    /**
-     * Return exception as json.
-     * @param  Validator $validator
-     * @return Exception
-     */
-    protected function failedValidation(Validator $validator)
-    {
-        // We should show only the first errors
-        $errors = $this->fistErrors($validator->errors());
-
-        throw new HttpResponseException(response()->json($errors, 422));
-    }
-
-    /**
-     * Returns only first errors for each field.
-     * @param  MessageBag $messageBag
-     * @return array
-     */
-    private function fistErrors(MessageBag $messageBag)
-    {
-        $errors = [];
-        foreach ($messageBag->keys() as $key){
-            $errors[$key] = $messageBag->first($key);
-        }
-
-        return $errors;
-    }
-
 }

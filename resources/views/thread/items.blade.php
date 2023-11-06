@@ -2,7 +2,10 @@
     @if ($comment->parent_id != $parent)
         @continue
     @endif
-    <article class="js-thread-item level-{{ $comment->level }}" id="item-{{ $comment->id }}" data-extra="{{ $comment->extra ? 'y' : 'n' }}">
+    <article class="js-thread-item level-{{ $comment->level }}"
+        id="item-{{ $comment->id }}"
+        data-extra="{{ $comment->extra ? 'y' : 'n' }}"
+    >
         <div class="js-wrapper pt-4 pl-0 md:pl-3 pr-1 rounded-lg">
             <footer class="flex justify-between items-center mb-2">
                 <div class="flex items-center">
