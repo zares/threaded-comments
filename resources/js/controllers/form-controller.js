@@ -2,22 +2,39 @@ import { Controller } from '@hotwired/stimulus';
 import alerts from '../components/alerts';
 
 export default class extends Controller {
-    static targets = ['submit', 'alert'];
+    static targets = [
+        'submit',
+        'alert',
+        'image',
+        'file',
+        'ispan',
+        'fspan'
+    ];
 
     initialize() {
         this.form = null;
     }
 
-    // Disable form and show spinner
-    submitStart() {
-        this.form.toggleAttribute("data-submitting", true);
-        this.submitTarget.disabled = true;
+    // Select attachment image
+    selectImage() {
+        this.imageTarget.click();
     }
 
-    // Enable form and hide spinner
-    submitEnd() {
-        this.form.toggleAttribute("data-submitting", false);
-        this.submitTarget.disabled = false;
+    // Showing image file name
+    imageName(event) {
+        this.ispanTarget.innerHTML =
+            event.target.files[0].name;
+    }
+
+    // Select attachment file
+    selectFile() {
+        this.fileTarget.click();
+    }
+
+    // Showing text file name
+    fileName(event) {
+        this.fspanTarget.innerHTML =
+            event.target.files[0].name;
     }
 
     // Submit form action
@@ -46,28 +63,6 @@ export default class extends Controller {
         );
     }
 
-    // Show the alert message
-    showAlert(response) {
-        switch (response.status) {
-            case 422:
-                this.alertTarget.innerHTML = alerts.errorMessage([
-                    response.data.message
-                ]);
-                break;
-            case 419:
-                this.alertTarget.innerHTML = alerts.errorMessage([
-                    'HTTP 500 Internal Server Error.',
-                    'Please refresh page and try again...'
-                ]);
-                break;
-            default:
-                this.alertTarget.innerHTML = alerts.errorMessage([
-                    'HTTP 500 Internal Server Error.',
-                ]);
-                break;
-        }
-    }
-
     // Post the message
     postMessage(url, data) {
         axios.post(url, data, {
@@ -91,5 +86,39 @@ export default class extends Controller {
                 }
                 this.submitEnd();
             });
+    }
+
+    // Show the alert message
+    showAlert(response) {
+        switch (response.status) {
+            case 422:
+                this.alertTarget.innerHTML = alerts.errorMessage([
+                    response.data.message
+                ]);
+                break;
+            case 419:
+                this.alertTarget.innerHTML = alerts.errorMessage([
+                    'HTTP 500 Internal Server Error.',
+                    'Please refresh page and try again...'
+                ]);
+                break;
+            default:
+                this.alertTarget.innerHTML = alerts.errorMessage([
+                    'HTTP 500 Internal Server Error.',
+                ]);
+                break;
+        }
+    }
+
+    // Disable form and show spinner
+    submitStart() {
+        this.form.toggleAttribute("data-submitting", true);
+        this.submitTarget.disabled = true;
+    }
+
+    // Enable form and hide spinner
+    submitEnd() {
+        this.form.toggleAttribute("data-submitting", false);
+        this.submitTarget.disabled = false;
     }
 }
